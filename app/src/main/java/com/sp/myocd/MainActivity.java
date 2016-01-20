@@ -48,29 +48,21 @@ public class MainActivity extends Activity {
         offBtn.setOnClickListener(new View.OnClickListener() {//set click listener
             @Override
             public void onClick(View v) {
-                if(ip.getText().toString().equals("")||port.getText().toString().equals("")){//validate if fields are empty
-                    Toast.makeText(getApplicationContext(),"Please fill in the fields",Toast.LENGTH_LONG).show();
-                }
-                else{
                     //execute the networking sending of data in the background
+                    if(os!=null){
                         AsyncTask.execute(new Runnable() {
                             @Override
                             public void run() {
-                                if (Looper.myLooper() == null)Looper.prepare();//to allow the generation of TOAST in the thread
                                 try {
                                 if(tcpSocket != null) {
                                     os.write("1".getBytes());//write data to esp using the outputstream
-                                    Toast.makeText(getApplicationContext(),"SENT!",Toast.LENGTH_LONG).show();
-                                }
-                                else{
-                                    Toast.makeText(getApplicationContext(),"Cannot connect to server",Toast.LENGTH_LONG).show();
                                 }
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
                             }
                         });
-                }
+                    }
             }
         });
     }
